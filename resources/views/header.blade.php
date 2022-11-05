@@ -16,6 +16,8 @@
                         <a class="nav-link" aria-current="page" href="/products">Catalog</a>
                     </li>
                 </ul>
+
+                <a class="nav-link" href="/cart"> Cart </a>
             </div>
         </div>
     </nav>

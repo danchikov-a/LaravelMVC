@@ -20,7 +20,7 @@
 
         </tbody>
     </table>
-    <div>Description: </div>
+    <div>Description:</div>
     <div>{{$product->description}} </div>
     <table class="table table-bordered table-hover">
         <caption>Television list</caption>
@@ -39,10 +39,21 @@
                 <td>{{ $service->deadline }}</td>
                 <td>{{ $service->cost }}</td>
                 <td>
-                    <form class="btn btn-outline-success"
-                          action="{{ $product->id}}/services/{{ $service->id }}" method="post">
-                        <button>+</button>
-                    </form>
+                    @if(!isset($service->isAdded))
+                        <form class="btn btn-outline-success"
+                              action="/services/{{ $service->id }}/addToServiceToProduct" method="post">
+                            @method('put')
+                            @csrf
+                            <button>+</button>
+                        </form>
+                    @else
+                        <form class="btn btn-outline-danger"
+                              action="/services/{{ $service->id }}/deleteServiceFromProduct" method="post">
+                            @method('put')
+                            @csrf
+                            <button>-</button>
+                        </form>
+                    @endif
                 </td>
             </tr>
         @endforeach

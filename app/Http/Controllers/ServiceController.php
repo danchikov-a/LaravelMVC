@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 class ServiceController extends Controller
 {
-    public function show(Service $service)
+    public function show(Service $service): Factory|View|Application
     {
         return view("/service", ['service' => $service]);
     }

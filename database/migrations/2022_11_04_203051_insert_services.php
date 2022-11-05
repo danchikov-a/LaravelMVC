@@ -29,8 +29,8 @@ return new class extends Migration {
         );
         DB::table('services')->insert(
             array(
-                'name' => 'Warranty',
-                'deadline' => 30,
+                'name' => 'Install',
+                'deadline' => 15,
                 'cost' => 15
             )
         );

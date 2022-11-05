@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdministrationProductController;
 use App\Http\Controllers\AdministrationServiceController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
@@ -33,3 +33,5 @@ Route::delete('/services/{service}', [AdministrationServiceController::class, 'd
 
 Route::put('/products/{product}', [AdministrationProductController::class, 'update']);
 Route::put('/services/{service}', [AdministrationServiceController::class, 'update']);
+Route::put('/services/{service}/addToServiceToProduct', [CartController::class, 'addServiceToProduct']);
+Route::put('/services/{service}/deleteServiceFromProduct', [CartController::class, 'deleteServiceFromProduct']);
