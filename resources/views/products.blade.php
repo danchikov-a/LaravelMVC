@@ -49,6 +49,8 @@
         <th scope="col">Release date</th>
         <th scope="col">Cost</th>
         <th scope="col">Add to cart</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -62,6 +64,16 @@
             <td>
                 <a class="btn btn-outline-success"
                    href="products/{{ $product->id }}">Add</a>
+            </td>
+            <td>
+                <a class="btn btn-outline-dark" href="/products/{{ $product->id }}/edit">Update</a>
+            </td>
+            <td>
+                <form action="/products/{{ $product->id }}" method="post">
+                    <input class="btn btn btn-outline-danger" type="submit" value="Delete" />
+                    @method('delete')
+                    @csrf
+                </form>
             </td>
         </tr>
     @endforeach

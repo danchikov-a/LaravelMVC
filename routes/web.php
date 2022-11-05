@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\AdministrationController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdministrationProductController;
+use App\Http\Controllers\AdministrationServiceController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +19,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
-Route::post('/products', [AdministrationController::class, 'store']);
+Route::get('/products/{product}', [ProductController::class, 'show']);
+Route::get('/services/{service}', [ServiceController::class, 'show']);
+Route::get('/services', [AdministrationServiceController::class, 'show']);
+Route::get('/products/{product}/edit', [AdministrationProductController::class, 'edit']);
+Route::get('/services/{service}/edit', [AdministrationServiceController::class, 'edit']);
 
+Route::post('/products', [AdministrationProductController::class, 'store']);
+Route::post('/services', [AdministrationServiceController::class, 'store']);
+
+Route::delete('/products/{product}', [AdministrationProductController::class, 'destroy']);
+Route::delete('/services/{service}', [AdministrationServiceController::class, 'destroy']);
+
+Route::put('/products/{product}', [AdministrationProductController::class, 'update']);
+Route::put('/services/{service}', [AdministrationServiceController::class, 'update']);

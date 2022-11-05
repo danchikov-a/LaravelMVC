@@ -21,7 +21,7 @@
         </tbody>
     </table>
     <div>Description: </div>
-    <div>{{$product->description}}</div>
+    <div>{{$product->description}} </div>
     <table class="table table-bordered table-hover">
         <caption>Television list</caption>
         <thead class="thead-dark">
@@ -33,28 +33,19 @@
         </tr>
         </thead>
         <tbody>
-
-        {{--      <?php foreach ($services as $service): }}
-          <tr>
-              <td><a href="../services/{{ $service->getId() }}">{{ $service->getName() }}</a></td>
-              <td>{{ $service->getDeadLine() }}</td>
-              <td>{{ $service->getCost() }}</td>
-              <td>
-                      <?php if (!isset($_SESSION[$service->getName()])):}}
-                  <form class="btn btn-outline-success"
-                        action="{{ $product->getId()}}/services/{{ $service->getId() }}" method="post">
-                      <button>+</button>
-                  </form>
-                  <?php else: }}
-                  <form class="btn btn-outline-danger"
-                        action="{{ $product->getId()}}/services/delete/{{ $service->getId() }}" method="post">
-                      <button>-</button>
-                  </form>
-                  <?php endif;}}
-              </td>
-          </tr>
-          <?php endforeach; }}--}}
-
+        @foreach($services as $service)
+            <tr>
+                <td><a href="../services/{{ $service->id }}">{{ $service->name }}</a></td>
+                <td>{{ $service->deadline }}</td>
+                <td>{{ $service->cost }}</td>
+                <td>
+                    <form class="btn btn-outline-success"
+                          action="{{ $product->id}}/services/{{ $service->id }}" method="post">
+                        <button>+</button>
+                    </form>
+                </td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
     {{--<div>Total cost: {{ $totalCost}}</div>--}}

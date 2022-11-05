@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,10 +16,10 @@ class ProductController extends Controller
         return view("/products", ['products' => $products]);
     }
 
-    public function show(int $id)
+    public function show(Product $product)
     {
-        $product = Product::where('id', $id)->first();
+        $services = Service::all();
 
-        return view("/product", ['product' => $product]);
+        return view("/product", ['product' => $product, 'services' => $services]);
     }
 }
