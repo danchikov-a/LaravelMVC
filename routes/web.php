@@ -24,12 +24,15 @@ Route::get('/services/{service}', [ServiceController::class, 'show']);
 Route::get('/services', [AdministrationServiceController::class, 'show']);
 Route::get('/products/{product}/edit', [AdministrationProductController::class, 'edit']);
 Route::get('/services/{service}/edit', [AdministrationServiceController::class, 'edit']);
+Route::get('/cart', [CartController::class, 'index']);
 
 Route::post('/products', [AdministrationProductController::class, 'store']);
 Route::post('/services', [AdministrationServiceController::class, 'store']);
+Route::post('/products/{product}/addToCart', [CartController::class, 'addToCart']);
 
 Route::delete('/products/{product}', [AdministrationProductController::class, 'destroy']);
 Route::delete('/services/{service}', [AdministrationServiceController::class, 'destroy']);
+Route::delete('cart/{product}', [CartController::class, 'destroy']);
 
 Route::put('/products/{product}', [AdministrationProductController::class, 'update']);
 Route::put('/services/{service}', [AdministrationServiceController::class, 'update']);

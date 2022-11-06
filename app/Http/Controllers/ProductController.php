@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Service;
+use App\Service\CartService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Config;
 
 class ProductController extends Controller
 {
     private string $productWithServices;
+    private CartService $cartService;
 
-    public function __construct()
+    public function __construct(CartService $cartService)
     {
         $this->productWithServices = Config::get("sessionVariables.productWithServices");
+        $this->cartService = $cartService;
     }
 
     public function index(): Factory|View|Application
@@ -30,23 +31,8 @@ class ProductController extends Controller
     {
         session()->keep($this->productWithServices);
 
-        $services = $this->changeServicesAccordingToClicked(session($this->productWithServices), Service::all());
+        $services = $this->cartService->changeServicesAccordingToClicked();
 
         return view("/product", ['product' => $product, 'services' => $services]);
-    }
-
-    private function changeServicesAccordingToClicked(?array $clickedServices, Collection $services): Collection
-    {
-        if ($clickedServices != null) {
-            foreach ($clickedServices as $clickedService) {
-                foreach ($services as $service) {
-                    if ($service->name == $clickedService->name) {
-                        $service->isAdded = true;
-                    }
-                }
-            }
-        }
-
-        return $services;
     }
 }

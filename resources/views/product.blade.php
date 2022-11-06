@@ -23,7 +23,6 @@
     <div>Description:</div>
     <div>{{$product->description}} </div>
     <table class="table table-bordered table-hover">
-        <caption>Television list</caption>
         <thead class="thead-dark">
         <tr>
             <th scope="col">Name</th>
@@ -59,8 +58,9 @@
         @endforeach
         </tbody>
     </table>
-    {{--<div>Total cost: {{ $totalCost}}</div>--}}
     <form class="btn btn-outline-success" action="{{$product->id}}/addToCart" method="post">
+        @method("post")
+        @csrf
         <button>Add to cart</button>
     </form>
 @else
