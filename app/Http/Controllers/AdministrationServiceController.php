@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ServiceRequest;
 use App\Models\Service;
+use App\Service\ServiceService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -11,9 +12,16 @@ use Illuminate\Http\RedirectResponse;
 
 class AdministrationServiceController extends Controller
 {
+    private ServiceService $serviceService;
+
+    public function __construct(ServiceService $serviceService)
+    {
+        $this->serviceService = $serviceService;
+    }
+
     public function show(): Factory|View|Application
     {
-        $services = Service::all();
+        $services = $this->serviceService->getAll();
 
         return view("/services", ['services' => $services]);
     }
@@ -21,9 +29,9 @@ class AdministrationServiceController extends Controller
     public function store(ServiceRequest $request): RedirectResponse
     {
         if ($request->validated()) {
-            $service = Service::create($this->getFieldsFromForm($request));
+            $input = $this->getFieldsFromForm($request);
 
-            $service->save();
+            $this->serviceService->save($input);
 
             return redirect()->to("/services");
         } else {
@@ -33,7 +41,7 @@ class AdministrationServiceController extends Controller
 
     public function destroy(Service $service): RedirectResponse
     {
-        Service::destroy($service->id);
+        $this->serviceService->destroy($service->id);
 
         return redirect()->back();
     }
@@ -45,7 +53,9 @@ class AdministrationServiceController extends Controller
 
     public function update(ServiceRequest $request, Service $service): RedirectResponse
     {
-        Service::where('id', $service->id)->update($this->getFieldsFromForm($request));
+        $input = $this->getFieldsFromForm($request);
+
+        $this->serviceService->update($service->id, $input);
 
         return redirect()->to('/services');
     }
