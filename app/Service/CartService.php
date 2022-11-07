@@ -24,7 +24,7 @@ class CartService
      */
     public function getCart(): array
     {
-        return session($this->cartConfig);
+        return session($this->cartConfig) ?? [];
     }
 
     public function addToCart(Product $product): void
@@ -94,7 +94,9 @@ class CartService
         if ($clickedServices != null) {
             foreach ($clickedServices as $clickedService) {
                 foreach ($services as $service) {
+                    echo "here";
                     if ($service->name == $clickedService->name) {
+                        echo "here@@";
                         $service->isAdded = true;
                     }
                 }
