@@ -5,7 +5,6 @@ namespace Tests\Unit\Service;
 use App\Models\Product;
 use App\Models\Service;
 use App\Service\CartService;
-use App\Service\ServiceService;
 use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 

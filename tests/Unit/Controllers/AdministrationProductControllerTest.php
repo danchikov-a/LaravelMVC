@@ -2,9 +2,7 @@
 
 namespace Tests\Unit\Controllers;
 
-use App\Http\Controllers\AdministrationProductController;
 use App\Http\Requests\ProductRequest;
-use App\Models\Product;
 use App\Service\ProductService;
 use Mockery;
 use Mockery\MockInterface;

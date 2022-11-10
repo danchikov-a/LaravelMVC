@@ -3,8 +3,7 @@
 namespace Tests\Unit\Service;
 
 use App\Models\Service;
-use App\Service\ServiceService;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use App\Service\ServiceManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -20,7 +19,7 @@ class ServiceServiceTest extends TestCase
 
     public function test_service_service_properly_save_Service()
     {
-        $service = new ServiceService();
+        $service = new ServiceManager();
 
         $service->save(self::TEST_INPUT);
 
@@ -29,7 +28,7 @@ class ServiceServiceTest extends TestCase
 
     public function test_service_service_properly_destroy_Service()
     {
-        $service = new ServiceService();
+        $service = new ServiceManager();
 
         $service->save(self::TEST_INPUT);
 
@@ -42,7 +41,7 @@ class ServiceServiceTest extends TestCase
 
     public function test_service_service_properly_update_Service()
     {
-        $service = new ServiceService();
+        $service = new ServiceManager();
 
         $service->save(self::TEST_INPUT);
 
@@ -61,7 +60,7 @@ class ServiceServiceTest extends TestCase
 
     public function test_service_service_properly_get_all()
     {
-        $service = new ServiceService();
+        $service = new ServiceManager();
 
         self::assertSame($service->getAll()->count(), 4);
     }

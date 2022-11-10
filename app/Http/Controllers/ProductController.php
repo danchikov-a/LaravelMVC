@@ -5,36 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Service\CartService;
 use App\Service\ProductService;
+use App\Traits\ConfigTrait;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Config;
 
 class ProductController extends Controller
 {
-    private string $productWithServices;
-    private CartService $cartService;
-    private ProductService $productService;
-
-    public function __construct(CartService $cartService, ProductService $productService)
-    {
-        $this->productWithServices = Config::get("sessionVariables.productWithServices");
-        $this->cartService = $cartService;
-        $this->productService = $productService;
-    }
+    use ConfigTrait;
 
     public function index(): Factory|View|Application
     {
-        $products = $this->productService->getAll();
+        $products = ProductService::getAll();
 
         return view("/products", ['products' => $products]);
     }
 
     public function show(Product $product): Factory|View|Application
     {
-        session()->keep($this->productWithServices);
+        session()->keep(config(self::$productWithServicesConfig));
 
-        $services = $this->cartService->changeServicesAccordingToClicked();
+        $services = CartService::changeServicesAccordingToClicked();
 
         return view("/product", ['product' => $product, 'services' => $services]);
     }

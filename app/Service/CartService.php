@@ -4,45 +4,38 @@ namespace App\Service;
 
 use App\Models\Product;
 use App\Models\Service;
+use App\Traits\ConfigTrait;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Config;
 
 class CartService
 {
-    private string $cartConfig;
-    private string $productWithServices;
-    private int $totalCost = 0;
+    use ConfigTrait;
 
-    public function __construct()
-    {
-        $this->cartConfig = Config::get("sessionVariables.cart");
-        $this->productWithServices = Config::get("sessionVariables.productWithServices");
-    }
-
+    private static int $totalCost = 0;
     /**
      * @return array
      */
-    public function getCart(): array
+    public static function getCart(): array
     {
-        return session($this->cartConfig) ?? [];
+        return session(config(self::$cartConfig)) ?? [];
     }
 
-    public function addToCart(Product $product): void
+    public static function addToCart(Product $product): void
     {
-        session()->push($this->cartConfig, [$product->id => session($this->productWithServices)]);
+        session()->push(config(self::$cartConfig), [$product->id => session(config(self::$productWithServicesConfig))]);
     }
 
-    public function getProductsWithServices(): array
+    public static function getProductsWithServices(): array
     {
-        $cart = $this->getCart();
+        $cart = self::getCart();
         $products = [];
 
         foreach ($cart as $productWithServices) {
             foreach ($productWithServices as $productId => $services) {
                 $product = Product::where('id', $productId)->first();
                 $product->services = $services;
-                $product->totalCost = $this->getTotalCostOfProduct($product, $services);
-                $this->totalCost += $product->totalCost;
+                $product->totalCost = self::getTotalCostOfProduct($product, $services);
+                self::$totalCost += $product->totalCost;
 
                 $products[] = $product;
             }
@@ -51,7 +44,7 @@ class CartService
         return $products;
     }
 
-    private function getTotalCostOfProduct(Product $product, array $services): int
+    private static function getTotalCostOfProduct(Product $product, array $services): int
     {
         $totalCost = $product->cost;
 
@@ -62,17 +55,16 @@ class CartService
         return $totalCost;
     }
 
-    public function getTotalCost(): int
+    public static function getTotalCost(): int
     {
-        return $this->totalCost;
+        return self::$totalCost;
     }
 
-    public function deleteServiceFromProduct(Service $service): array
+    public static function deleteServiceFromProduct(Service $service): array
     {
-        $servicesFromProduct = session($this->productWithServices);
+        $servicesFromProduct = session(config(self::$productWithServicesConfig));
 
-        foreach ($servicesFromProduct as $index => $serviceFromProduct)
-        {
+        foreach ($servicesFromProduct as $index => $serviceFromProduct) {
             if ($serviceFromProduct->id == $service->id) {
                 unset($servicesFromProduct[$index]);
             }
@@ -81,22 +73,20 @@ class CartService
         return $servicesFromProduct;
     }
 
-    public function addServiceToProduct(Service $service): array
+    public static function addServiceToProduct(Service $service): array
     {
-        return array_merge((array) session($this->productWithServices), array($service));
+        return array_merge((array)session(config(self::$productWithServicesConfig)), array($service));
     }
 
-    public function changeServicesAccordingToClicked(): Collection
+    public static function changeServicesAccordingToClicked(): Collection
     {
-        $clickedServices = session($this->productWithServices);
+        $clickedServices = session(config(self::$productWithServicesConfig));
         $services = Service::all();
 
         if ($clickedServices != null) {
             foreach ($clickedServices as $clickedService) {
                 foreach ($services as $service) {
-                    echo "here";
                     if ($service->name == $clickedService->name) {
-                        echo "here@@";
                         $service->isAdded = true;
                     }
                 }
@@ -106,9 +96,9 @@ class CartService
         return $services;
     }
 
-    public function deleteFromCart(Product $product): void
+    public static function deleteFromCart(Product $product): void
     {
-        $cart = $this->getCart();
+        $cart = self::getCart();
 
         foreach ($cart as $index => $productWithServices) {
             foreach ($productWithServices as $productId => $services) {
@@ -118,6 +108,6 @@ class CartService
             }
         }
 
-        session()->put($this->cartConfig, $cart);
+        session()->put(config(self::$cartConfig), $cart);
     }
 }

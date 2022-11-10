@@ -5,26 +5,26 @@ namespace App\Service;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Collection;
 
-class ServiceService
+class ServiceManager
 {
-    public function save(array $input): void
+    public static function save(array $input): void
     {
         $product = Service::create($input);
 
         $product->save();
     }
 
-    public function destroy(int $id): void
+    public static function destroy(int $id): void
     {
         Service::destroy($id);
     }
 
-    public function update(int $id, array $input): void
+    public static function update(int $id, array $input): void
     {
         Service::where('id', $id)->update($input);
     }
 
-    public function getAll(): Collection
+    public static function getAll(): Collection
     {
         return Service::all();
     }

@@ -18,22 +18,18 @@ class ProductServiceTest extends TestCase
 
     public function test_product_service_properly_save_product()
     {
-        $service = new ProductService();
-
-        $service->save(self::TEST_INPUT);
+        ProductService::save(self::TEST_INPUT);
 
         self::assertNotNull(Product::where('name', 'test')->first());
     }
 
     public function test_product_service_properly_destroy_product()
     {
-        $service = new ProductService();
-
-        $service->save(self::TEST_INPUT);
+        ProductService::save(self::TEST_INPUT);
 
         $productId = Product::where('name', 'test')->first()->id;
 
-        $service->destroy($productId);
+        ProductService::destroy($productId);
 
         self::assertNull(Product::where('id', $productId)->first());
     }
@@ -42,11 +38,11 @@ class ProductServiceTest extends TestCase
     {
         $service = new ProductService();
 
-        $service->save(self::TEST_INPUT);
+        ProductService::save(self::TEST_INPUT);
 
         $productId = Product::where('name', 'test')->first()->id;
 
-        $service->update($productId,
+        ProductService::update($productId,
             [
                 'name' => 'testtest',
                 'manufacture' => 'test',
