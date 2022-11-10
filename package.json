@@ -1,7 +1,7 @@
 {
     "private": true,
     "scripts": {
-        "dev": "vite",
+        "dev": "mix",
         "build": "vite build"
     },
     "devDependencies": {
@@ -10,5 +10,10 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "vite": "^3.0.0"
+    },
+    "dependencies": {
+        "boostrap": "^2.0.0",
+        "bootstrap": "^5.2.2",
+        "laravel-mix": "^6.0.49"
     }
 }
