@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ProductFilter extends AbstractFilter
 {
-    protected static function filterCostFrom(string $requestField, Builder $query)
+    protected static function filterCostFrom(string $requestField, Builder $query): Builder
     {
         return $query->where('cost', '>', $requestField);
     }
 
-    protected static function filterCostTo(string $requestField, Builder $query)
+    protected static function filterCostTo(string $requestField, Builder $query): Builder
     {
         return $query->where('cost', '<', $requestField);
     }
 
-    protected static function filterManufacture(string $requestField, Builder $query)
+    protected static function filterManufacture(string $requestField, Builder $query): Builder
     {
         return $query->where('manufacture', 'like', "%{$requestField}%");
     }

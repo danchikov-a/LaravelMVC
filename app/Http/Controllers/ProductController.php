@@ -18,7 +18,7 @@ class ProductController extends Controller
 
     public function index(Request $request): Factory|View|Application
     {
-        $products = SortManager::sort(ProductService::getAll($request), $request);
+        $products = SortManager::sort(ProductService::getAll($request), $request)->paginate(10);
 
         return view("/products", ['products' => $products]);
     }

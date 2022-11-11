@@ -42,7 +42,7 @@
         <button id="addProductButton" class="btn btn-primary">Add product</button>
     </form>
 
-    <select class="form-select" onchange="window.location.href=this.options[this.selectedIndex].value;">
+    <select class="user-form form-select" onchange="window.location.href=this.options[this.selectedIndex].value;">
         <option>Sort</option>
         <option value="{{route('productsIndex', ['sort' => 'name_desc'])}}">Name from a to z</option>
         <option value="{{route('productsIndex', ['sort' => 'name_desc'])}}">Name from z to a</option>
@@ -107,7 +107,9 @@
                 </td>
             </tr>
         @endforeach
-
         </tbody>
     </table>
+    <div class="d-flex">
+        {!! $products->links() !!}
+    </div>
 @endsection
