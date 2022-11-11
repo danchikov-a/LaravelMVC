@@ -39,8 +39,20 @@
         @if($errors->has('cost'))
             <div class="error">{{ $errors->first('cost') }}</div>
         @endif
-        <button id="addProductButton" class="btn btn-primary" >Add product</button>
+        <button id="addProductButton" class="btn btn-primary">Add product</button>
     </form>
+
+    <select class="form-select" onchange="window.location.href=this.options[this.selectedIndex].value;">
+        <option>Sort</option>
+        <option value="{{route('productsIndex', ['sort' => 'name_desc'])}}">Name from a to z</option>
+        <option value="{{route('productsIndex', ['sort' => 'name_desc'])}}">Name from z to a</option>
+        <option value="{{route('productsIndex', ['sort' => 'manufacture_asc'])}}">Manufacture from a to z</option>
+        <option value="{{route('productsIndex', ['sort' => 'manufacture_desc'])}}">Manufacture from z to a</option>
+        <option value="{{route('productsIndex', ['sort' => 'releaseDate_asc'])}}">Oldest</option>
+        <option value="{{route('productsIndex', ['sort' => 'releaseDate_desc'])}}">Newest</option>
+        <option value="{{route('productsIndex', ['sort' => 'cost_asc'])}}">Cheaper</option>
+        <option value="{{route('productsIndex', ['sort' => 'cost_desc'])}}">More expensive</option>
+    </select>
 
     <table class="table table-bordered table-hover">
         <thead class="thead-dark">
@@ -71,7 +83,7 @@
                 </td>
                 <td>
                     <form action="{{route('productsDestroy', $product->id)}}" method="post">
-                        <input class="btn btn btn-outline-danger" type="submit" value="Delete" />
+                        <input class="btn btn btn-outline-danger" type="submit" value="Delete"/>
                         @method('delete')
                         @csrf
                     </form>
