@@ -54,6 +54,23 @@
         <option value="{{route('productsIndex', ['sort' => 'cost_desc'])}}">More expensive</option>
     </select>
 
+    <form class="user-form">
+        <div>
+            Manufacture<input name="manufacture">
+        </div>
+        <div>
+            Cost
+            <div>
+                From<input name="costFrom" placeholder="0">
+            </div>
+            <div>
+                To<input name="costTo" placeholder="0">
+            </div>
+        </div>
+
+        <button id="showProductsButton" class="btn btn-primary">Show products</button>
+    </form>
+
     <table class="table table-bordered table-hover">
         <thead class="thead-dark">
         <tr>

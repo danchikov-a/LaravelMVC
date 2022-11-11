@@ -2,8 +2,10 @@
 
 namespace App\Service;
 
+use App\Filters\ProductFilter;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 
 class ProductService
 {
@@ -24,8 +26,8 @@ class ProductService
         Product::where('id', $id)->update($input);
     }
 
-    public static function getAll(): Collection
+    public static function getAll(Request $request): Collection
     {
-        return Product::all();
+        return ProductFilter::filter(Product::class, $request);
     }
 }
