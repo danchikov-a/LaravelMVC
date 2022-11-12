@@ -44,14 +44,14 @@
 
     <select class="user-form form-select" onchange="window.location.href=this.options[this.selectedIndex].value;">
         <option>Sort</option>
-        <option value="{{route('productsIndex', ['sort' => 'name_desc'])}}">Name from a to z</option>
-        <option value="{{route('productsIndex', ['sort' => 'name_desc'])}}">Name from z to a</option>
-        <option value="{{route('productsIndex', ['sort' => 'manufacture_asc'])}}">Manufacture from a to z</option>
-        <option value="{{route('productsIndex', ['sort' => 'manufacture_desc'])}}">Manufacture from z to a</option>
-        <option value="{{route('productsIndex', ['sort' => 'releaseDate_asc'])}}">Oldest</option>
-        <option value="{{route('productsIndex', ['sort' => 'releaseDate_desc'])}}">Newest</option>
-        <option value="{{route('productsIndex', ['sort' => 'cost_asc'])}}">Cheaper</option>
-        <option value="{{route('productsIndex', ['sort' => 'cost_desc'])}}">More expensive</option>
+        <option value="{{request()->fullUrlWithQuery(['sort' => 'name_asc'])}}">Name from a to z</option>
+        <option value="{{request()->fullUrlWithQuery(['sort' => 'name_desc'])}}">Name from z to a</option>
+        <option value="{{request()->fullUrlWithQuery(['sort' => 'manufacture_asc'])}}">Manufacture from a to z</option>
+        <option value="{{request()->fullUrlWithQuery(['sort' => 'manufacture_desc'])}}">Manufacture from z to a</option>
+        <option value="{{request()->fullUrlWithQuery(['sort' => 'releaseDate_asc'])}}">Oldest</option>
+        <option value="{{request()->fullUrlWithQuery(['sort' => 'releaseDate_desc'])}}">Newest</option>
+        <option value="{{request()->fullUrlWithQuery(['sort' => 'cost_asc'])}}">Cheaper</option>
+        <option value="{{request()->fullUrlWithQuery(['sort' => 'cost_desc'])}}">More expensive</option>
     </select>
 
     <form class="user-form">
