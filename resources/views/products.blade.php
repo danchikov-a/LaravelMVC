@@ -1,44 +1,44 @@
 @extends('layout.baseLayout')
 @section('content')
 
-    <form class="user-form" action="{{route('productsStore')}}" method="post">
+    <form class="user-form" action="{{ route('productsStore') }}" method="post">
         @csrf
         <caption>Product add form</caption>
         <div class="form-group form-element">
             <label for="name">Name</label>
             <input name="name" type="text" id="name">
         </div>
-        @if($errors->has('name'))
-            <div class="error">{{ $errors->first('name') }}</div>
-        @endif
+        @error('name')
+            <div class="error">{{ $message }}</div>
+        @enderror
         <div class="form-group form-element">
             <label for="description">Description</label>
             <input name="description" type="text" id="description">
         </div>
-        @if($errors->has('description'))
-            <div class="error">{{ $errors->first('description') }}</div>
-        @endif
+        @error('description')
+            <div class="error">{{ $message }}</div>
+        @enderror
         <div class="form-group form-element">
             <label for="manufacture">Manufacture</label>
             <input name="manufacture" type="text" id="manufacture">
         </div>
-        @if($errors->has('manufacture'))
-            <div class="error">{{ $errors->first('manufacture') }}</div>
-        @endif
+        @error('manufacture')
+            <div class="error">{{ $message }}</div>
+        @enderror
         <div class="form-group form-element">
             <label for="releaseDate">Release date</label>
             <input name="releaseDate" type="text" id="releaseDate">
         </div>
-        @if($errors->has('releaseDate'))
-            <div class="error">{{ $errors->first('releaseDate') }}</div>
-        @endif
+        @error('releaseDate')
+            <div class="error">{{ $message }}</div>
+        @enderror
         <div class="form-group form-element">
             <label for="cost">Cost</label>
             <input name="cost" type="text" id="cost">
         </div>
-        @if($errors->has('cost'))
-            <div class="error">{{ $errors->first('cost') }}</div>
-        @endif
+        @error('cost')
+            <div class="error">{{ $message }}</div>
+        @enderror
         <button id="addProductButton" class="btn btn-primary">Add product</button>
     </form>
 
@@ -87,20 +87,20 @@
 
         @foreach ($products as $product)
             <tr>
-                <td><a href="{{route('productsShow', $product->id)}}">{{$product->name}}</a></td>
+                <td><a href="{{ route('productsShow', $product->id) }}">{{ $product->name }}</a></td>
                 <td>{{$product->manufacture }}</td>
                 <td>{{ $product->releaseDate }}</td>
                 <td>{{ $product->cost }}</td>
                 <td>
                     <a class="btn btn-outline-success"
-                       href="{{route('productsShow', $product->id)}}">Add</a>
+                       href="{{ route('productsShow', $product->id) }}">Add</a>
                 </td>
                 <td>
-                    <a class="btn btn-outline-dark" href="{{route('productsEdit', $product->id)}}">Update</a>
+                    <a class="btn btn-outline-dark" href="{{ route('productsEdit', $product->id) }}">Update</a>
                 </td>
                 <td>
-                    <form action="{{route('productsDestroy', $product->id)}}" method="post">
-                        <input class="btn btn btn-outline-danger" type="submit" value="Delete"/>
+                    <form action="{{ route('productsDestroy', $product->id) }}" method="post">
+                        <input type="submit" class="btn btn btn-outline-danger" value="Delete"/>
                         @method('delete')
                         @csrf
                     </form>
@@ -109,7 +109,5 @@
         @endforeach
         </tbody>
     </table>
-    <div class="d-flex">
-        {!! $products->links() !!}
-    </div>
+    @include('partials.pagination', ['paginationArray' => $products->links()])
 @endsection
