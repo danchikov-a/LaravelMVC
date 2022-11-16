@@ -40,4 +40,3 @@ Route::put('/products/{product}/services/{service}/addServiceToProduct', [CartCo
     ->name('addServiceToProduct');
 Route::put('/products/{product}/services/{service}/deleteServiceFromProduct', [CartController::class, 'deleteServiceFromProduct'])
     ->name('deleteServiceFromProduct');
-

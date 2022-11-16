@@ -14,7 +14,7 @@ class SortManager
     public static function sort(Collection $collection, Request $request): Collection
     {
         if ($request->filled('sort')) {
-            $fieldAndSortType = explode("_", $request->sort);
+            $fieldAndSortType = explode('_', $request->sort);
 
             if (count($fieldAndSortType) == self::AMOUNT_OF_WORDS_IN_PARAM) {
                 $field = $fieldAndSortType[self::FIELD_PARAM];

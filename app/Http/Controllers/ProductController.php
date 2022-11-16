@@ -20,7 +20,7 @@ class ProductController extends Controller
     {
         $products = SortManager::sort(ProductService::getAll($request), $request)->paginate(10)->withQueryString();;
 
-        return view("/products", ['products' => $products]);
+        return view('/products', ['products' => $products]);
     }
 
     public function show(Product $product): Factory|View|Application
@@ -29,6 +29,6 @@ class ProductController extends Controller
 
         $services = CartService::changeServicesAccordingToClicked();
 
-        return view("/product", ['product' => $product, 'services' => $services]);
+        return view('/product', ['product' => $product, 'services' => $services]);
     }
 }

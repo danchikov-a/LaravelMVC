@@ -2,14 +2,6 @@
 
 namespace Tests\Unit\Controllers;
 
-use App\Http\Controllers\ProductController;
-use App\Models\Product;
-use App\Service\CartService;
-use App\Service\ProductService;
-
-use Illuminate\Database\Eloquent\Collection;
-use Mockery;
-use Mockery\MockInterface;
 use Tests\TestCase;
 
 class ProductControllerTest extends TestCase

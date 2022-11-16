@@ -28,7 +28,7 @@ class AdministrationProductControllerTest extends TestCase
             })
         );
 
-        $response = $this->post("/products");
+        $response = $this->post('/products');
 
         $response->assertStatus(302);
     }

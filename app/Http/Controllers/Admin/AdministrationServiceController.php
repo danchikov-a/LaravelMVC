@@ -17,7 +17,7 @@ class AdministrationServiceController extends Controller
     {
         $services = ServiceManager::getAll();
 
-        return view("/services", ['services' => $services]);
+        return view('/services', ['services' => $services]);
     }
 
     public function store(ServiceRequest $request): RedirectResponse
@@ -38,7 +38,7 @@ class AdministrationServiceController extends Controller
 
     public function edit(Service $service): Factory|View|Application
     {
-        return view("/serviceEdit", ['service' => $service]);
+        return view('/serviceEdit', ['service' => $service]);
     }
 
     public function update(ServiceRequest $request, Service $service): RedirectResponse

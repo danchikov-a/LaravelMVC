@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 abstract class AbstractFilter
 {
-    public final static function filter(string $model, Request $request): Collection
+    final public static function filter(string $model, Request $request): Collection
     {
         $fieldsFilters = call_user_func([get_called_class(), 'setFieldsFilters']);
-        $model = new $model;
+        $model = new $model();
         $query = $model::query();
 
         foreach ($fieldsFilters as $field => $filter) {
@@ -22,5 +22,5 @@ abstract class AbstractFilter
         return $query->get();
     }
 
-    public abstract static function setFieldsFilters();
+    abstract public static function setFieldsFilters();
 }

@@ -31,7 +31,7 @@ class AdministrationProductController extends Controller
 
     public function edit(Product $product): Factory|View|Application
     {
-        return view("/productEdit", ['product' => $product]);
+        return view('/productEdit', ['product' => $product]);
     }
 
     public function update(ProductRequest $request, Product $product): RedirectResponse

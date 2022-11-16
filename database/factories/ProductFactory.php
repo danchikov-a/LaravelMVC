@@ -21,7 +21,7 @@ class ProductFactory extends Factory
             'description' => fake()->text(),
             'manufacture' => fake()->text(20),
             'releaseDate' => fake()->date(),
-            'cost' => fake()->randomDigitNotNull()
+            'cost' => fake()->randomDigitNotNull(),
         ];
     }
 }
