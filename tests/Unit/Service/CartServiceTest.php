@@ -20,14 +20,14 @@ class CartServiceTest extends TestCase
         'manufacture' => 'test',
         'description' => 'test',
         'releaseDate' => '1980-10-15',
-        'cost' => 200
+        'cost' => 200,
     ];
 
     private const TEST_SERVICE = [
         'id' => 0,
         'name' => 'test',
         'deadline' => 30,
-        'cost' => 200
+        'cost' => 200,
     ];
 
     public function setUp(): void
@@ -35,8 +35,8 @@ class CartServiceTest extends TestCase
         parent::setUp();
         session()->invalidate();
         $this->cartService = new CartService();
-        $this->cartConfig = Config::get("sessionVariables.cart");
-        $this->productWithServices = Config::get("sessionVariables.productWithServices");
+        $this->cartConfig = Config::get('sessionVariables.cart');
+        $this->productWithServices = Config::get('sessionVariables.productWithServices');
     }
 
     public function test_get_cart_if_cart_empty()

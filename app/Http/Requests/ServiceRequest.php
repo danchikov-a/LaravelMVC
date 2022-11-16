@@ -26,7 +26,7 @@ class ServiceRequest extends FormRequest
         return [
             'name' => ['required'],
             'deadline' => ['required', 'Integer'],
-            'cost' => ['required', 'Integer']
+            'cost' => ['required', 'Integer'],
         ];
     }
 }

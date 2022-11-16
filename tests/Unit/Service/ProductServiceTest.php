@@ -13,7 +13,7 @@ class ProductServiceTest extends TestCase
         'manufacture' => 'test',
         'description' => 'test',
         'releaseDate' => '1980-10-15',
-        'cost' => 200
+        'cost' => 200,
     ];
 
     public function test_product_service_properly_save_product()
@@ -42,13 +42,14 @@ class ProductServiceTest extends TestCase
 
         $productId = Product::where('name', 'test')->first()->id;
 
-        ProductService::update($productId,
+        ProductService::update(
+            $productId,
             [
                 'name' => 'testtest',
                 'manufacture' => 'test',
                 'description' => 'test',
                 'releaseDate' => '1980-10-15',
-                'cost' => 200
+                'cost' => 200,
             ]
         );
 

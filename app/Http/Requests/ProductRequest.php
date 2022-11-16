@@ -28,7 +28,7 @@ class ProductRequest extends FormRequest
             'manufacture' => ['required'],
             'description' => ['required'],
             'releaseDate' => ['required', 'date'],
-            'cost' => ['required', 'Integer']
+            'cost' => ['required', 'Integer'],
         ];
     }
 }

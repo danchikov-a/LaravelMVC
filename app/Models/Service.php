@@ -12,6 +12,6 @@ class Service extends Model
     protected $fillable = [
         'name',
         'deadline',
-        'cost'
+        'cost',
     ];
 }

@@ -11,6 +11,6 @@ class ServiceController extends Controller
 {
     public function show(Service $service): Factory|View|Application
     {
-        return view("/service", ['service' => $service]);
+        return view('/service', ['service' => $service]);
     }
 }

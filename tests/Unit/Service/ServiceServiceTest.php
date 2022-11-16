@@ -47,7 +47,8 @@ class ServiceServiceTest extends TestCase
 
         $serviceId = Service::where('name', 'test')->first()->id;
 
-        $service->update($serviceId,
+        $service->update(
+            $serviceId,
             [
                 'name' => 'testtest',
                 'deadline' => 30,

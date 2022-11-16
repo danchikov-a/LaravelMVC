@@ -75,7 +75,7 @@ class CartService
 
     public static function addServiceToProduct(Service $service): array
     {
-        return array_merge((array)session(config(self::$productWithServicesConfig)), array($service));
+        return array_merge((array)session(config(self::$productWithServicesConfig)), [$service]);
     }
 
     public static function changeServicesAccordingToClicked(): Collection

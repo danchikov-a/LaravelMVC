@@ -2,5 +2,5 @@
 
 return [
     'productWithServices' => 'productWithServices',
-    'cart' => 'cart'
+    'cart' => 'cart',
 ];
