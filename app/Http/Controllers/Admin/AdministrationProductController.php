@@ -10,6 +10,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class AdministrationProductController extends Controller
 {
@@ -39,5 +40,11 @@ class AdministrationProductController extends Controller
         ProductService::update($product->id, $request->all());
 
         return redirect()->to(route('productsIndex'));
+    }
+
+    public function export()
+    {
+
+        Storage::disk('s3')->put('q.txt', 'qwe');
     }
 }

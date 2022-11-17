@@ -1,6 +1,9 @@
 @extends('layout.baseLayout')
 @section('content')
-
+    <form action="{{ route('productsExport') }}" method="post">
+        @csrf
+        <button id="exportButton" class="btn btn-primary">Export catalog</button>
+    </form>
     <form class="user-form" action="{{ route('productsStore') }}" method="post">
         @csrf
         <caption>Product add form</caption>
