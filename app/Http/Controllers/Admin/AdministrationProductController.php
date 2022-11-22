@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use App\Service\MailManager;
 use App\Service\ProductService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class AdministrationProductController extends Controller
 {
@@ -42,9 +43,14 @@ class AdministrationProductController extends Controller
         return redirect()->to(route('productsIndex'));
     }
 
-    public function export()
+    public function export(Request $request): RedirectResponse
     {
+        $catalog = ProductService::getAll($request)->toArray();
 
-        Storage::disk('s3')->put('q.txt', 'qwe');
+        if (ProductService::export($catalog)) {
+            MailManager::sendMail();
+        }
+
+        return redirect()->to(route('productsIndex'));
     }
 }
