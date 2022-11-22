@@ -9,6 +9,7 @@ class MailManager
 {
     public static function sendMail()
     {
-        Mail::to('artsiom.danchykau@innowise-group.com')->send(new CatalogExportMail('It works!'));
+        Mail::to(config("catalogVariables.adminMail"))
+            ->send(new CatalogExportMail(config("catalogVariables.successfulExportMessage")));
     }
 }

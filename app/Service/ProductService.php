@@ -34,21 +34,6 @@ class ProductService
 
     public static function export(array $catalog): bool
     {
-        return Storage::put("/catalog.csv", self::strPutCsv($catalog));
-    }
-
-    private static function strPutCsv($catalog)
-    {
-        $fp = fopen('php://temp', 'r+b');
-
-        foreach ($catalog as $row) {
-            fputcsv($fp, $row);
-        }
-
-        rewind($fp);
-        $data = rtrim(stream_get_contents($fp), "\n");
-        fclose($fp);
-
-        return $data;
+        return Storage::put("/catalog.csv", FileManager::saveCsv($catalog));
     }
 }
