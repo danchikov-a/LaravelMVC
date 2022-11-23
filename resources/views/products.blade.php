@@ -1,4 +1,4 @@
-@extends('layout.baseLayout')
+@extends('layouts.app')
 @section('content')
     <form action="{{ route('productsExport') }}" method="post">
         @csrf

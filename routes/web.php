@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdministrationServiceController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,27 +18,33 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/products', [ProductController::class, 'index'])->name('productsIndex')->middleware('auth');
+    Route::get('/products/{product}', [ProductController::class, 'show'])->name('productsShow');
+    Route::get('/services/{service}', [ServiceController::class, 'show'])->name('servicesShow');
+    Route::get('/services', [AdministrationServiceController::class, 'show'])->name('servicesIndex');
+    Route::get('/products/{product}/edit', [AdministrationProductController::class, 'edit'])->name('productsEdit');
+    Route::get('/services/{service}/edit', [AdministrationServiceController::class, 'edit'])->name('servicesEdit');
+    Route::get('/cart', [CartController::class, 'index'])->name('cartIndex');
 
-Route::get('/products', [ProductController::class, 'index'])->name('productsIndex');
-Route::get('/products/{product}', [ProductController::class, 'show'])->name('productsShow');
-Route::get('/services/{service}', [ServiceController::class, 'show'])->name('servicesShow');
-Route::get('/services', [AdministrationServiceController::class, 'show'])->name('servicesIndex');
-Route::get('/products/{product}/edit', [AdministrationProductController::class, 'edit'])->name('productsEdit');
-Route::get('/services/{service}/edit', [AdministrationServiceController::class, 'edit'])->name('servicesEdit');
-Route::get('/cart', [CartController::class, 'index'])->name('cartIndex');
+    Route::post('/products', [AdministrationProductController::class, 'store'])->name('productsStore');
+    Route::post('/services', [AdministrationServiceController::class, 'store'])->name('servicesStore');
+    Route::post('/products/{product}/addToCart', [CartController::class, 'add'])->name('addToCart');
+    Route::post('/products/export', [AdministrationProductController::class, 'export'])->name('productsExport');
 
-Route::post('/products', [AdministrationProductController::class, 'store'])->name('productsStore');
-Route::post('/services', [AdministrationServiceController::class, 'store'])->name('servicesStore');
-Route::post('/products/{product}/addToCart', [CartController::class, 'add'])->name('addToCart');
-Route::post('/products/export', [AdministrationProductController::class, 'export'])->name('productsExport');
+    Route::delete('/products/{product}', [AdministrationProductController::class, 'destroy'])->name('productsDestroy');
+    Route::delete('/services/{service}', [AdministrationServiceController::class, 'destroy'])->name('servicesDestroy');
+    Route::delete('cart/{product}', [CartController::class, 'destroy'])->name('cartDestroy');
 
-Route::delete('/products/{product}', [AdministrationProductController::class, 'destroy'])->name('productsDestroy');
-Route::delete('/services/{service}', [AdministrationServiceController::class, 'destroy'])->name('servicesDestroy');
-Route::delete('cart/{product}', [CartController::class, 'destroy'])->name('cartDestroy');
+    Route::put('/products/{product}', [AdministrationProductController::class, 'update'])->name('productsUpdate');
+    Route::put('/services/{service}', [AdministrationServiceController::class, 'update'])->name('servicesUpdate');
+    Route::put('/products/{product}/services/{service}/addServiceToProduct', [CartController::class, 'addServiceToProduct'])
+        ->name('addServiceToProduct');
+    Route::put('/products/{product}/services/{service}/deleteServiceFromProduct', [CartController::class, 'deleteServiceFromProduct'])
+        ->name('deleteServiceFromProduct');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
 
-Route::put('/products/{product}', [AdministrationProductController::class, 'update'])->name('productsUpdate');
-Route::put('/services/{service}', [AdministrationServiceController::class, 'update'])->name('servicesUpdate');
-Route::put('/products/{product}/services/{service}/addServiceToProduct', [CartController::class, 'addServiceToProduct'])
-    ->name('addServiceToProduct');
-Route::put('/products/{product}/services/{service}/deleteServiceFromProduct', [CartController::class, 'deleteServiceFromProduct'])
-    ->name('deleteServiceFromProduct');
+Auth::routes();
+
+
