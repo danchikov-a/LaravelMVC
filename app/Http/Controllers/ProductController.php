@@ -18,6 +18,7 @@ class ProductController extends Controller
     use ConfigTrait;
 
     private const LOCALE_CURRENCY = 'BYN';
+    private const ELEMENTS_AT_PAGE = 10;
 
     public function index(Request $request): Factory|View|Application
     {
@@ -26,7 +27,7 @@ class ProductController extends Controller
             CurrencyService::getUsdPrice(self::LOCALE_CURRENCY)
         );
 
-        $sortedProducts = SortManager::sort($products, $request)->paginate(10)->withQueryString();
+        $sortedProducts = SortManager::sort($products, $request)->paginate(self::ELEMENTS_AT_PAGE)->withQueryString();
 
         return view('/products', ['products' => $sortedProducts]);
     }
