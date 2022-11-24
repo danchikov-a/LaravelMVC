@@ -81,6 +81,7 @@
             <th scope="col">Manufacture</th>
             <th scope="col">Release date</th>
             <th scope="col">Cost</th>
+            <th scope="col">UsdCost</th>
             <th scope="col">Add to cart</th>
             <th scope="col">Edit</th>
             <th scope="col">Delete</th>
@@ -94,6 +95,7 @@
                 <td>{{$product->manufacture }}</td>
                 <td>{{ $product->releaseDate }}</td>
                 <td>{{ $product->cost }}</td>
+                <td>{{ $product->usdCost }}</td>
                 <td>
                     <a class="btn btn-outline-success"
                        href="{{ route('productsShow', $product->id) }}">Add</a>

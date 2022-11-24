@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Service\CartService;
+use App\Service\CurrencyService;
 use App\Service\ProductService;
 use App\Service\SortManager;
 use App\Traits\ConfigTrait;
@@ -16,11 +17,18 @@ class ProductController extends Controller
 {
     use ConfigTrait;
 
+    private const LOCALE_CURRENCY = 'BYN';
+
     public function index(Request $request): Factory|View|Application
     {
-        $products = SortManager::sort(ProductService::getAll($request), $request)->paginate(10)->withQueryString();
+        $products = ProductService::getProductsWithUsdCosts(
+            ProductService::getAll($request),
+            CurrencyService::getUsdPrice(self::LOCALE_CURRENCY)
+        );
 
-        return view('/products', ['products' => $products]);
+        $sortedProducts = SortManager::sort($products, $request)->paginate(10)->withQueryString();
+
+        return view('/products', ['products' => $sortedProducts]);
     }
 
     public function show(Product $product): Factory|View|Application
