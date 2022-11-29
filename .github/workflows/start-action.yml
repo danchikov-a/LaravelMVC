@@ -12,7 +12,6 @@ jobs:
           docker pull localstack/localstack         # Make sure to pull the latest version of the image
 
           localstack start
-          echo "Startup complete"
       - name: Run some Tests against LocalStack
         run: |
           awslocal s3 mb s3://test
