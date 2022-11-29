@@ -1,19 +1,13 @@
-name: localstack-action-example
-on: push
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
 jobs:
-  example-job:
+  check-bats-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Start LocalStack
-        env:
-          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
-        run: |
-          python3 -m pip install localstack # install LocalStack cli and awslocal
-          docker pull localstack/localstack         # Make sure to pull the latest version of the image
-
-          localstack start
-      - name: Run some Tests against LocalStack
-        run: |
-          awslocal s3 mb s3://test
-          awslocal s3 ls
-          echo "Test Execution complete!"
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: npm install -g bats
+      - run: bats -v
