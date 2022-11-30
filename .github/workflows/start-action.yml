@@ -52,4 +52,3 @@ jobs:
           AWS_ACCESS_KEY_ID: itsafakeid
           AWS_SECRET_ACCESS_KEY: itsafakekey
           AWS_DEFAULT_REGION: "us-west-1"
-
