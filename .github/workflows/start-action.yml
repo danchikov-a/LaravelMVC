@@ -1,28 +1,8 @@
-on:
-  push:
-    branches:
-      - main
-name: CI/CD
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
 jobs:
-  phpunit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-        with:
-          fetch-depth: 1
-      - name: Install composer dependencies
-        run: |
-          composer update
-          composer install --no-scripts
-      - name: Prepare Laravel Application
-        run: |
-          cp .env.ci .env
-          php artisan key:generate
-          php artisan migrate
-      - name: Run Testsuite
-        run: vendor/bin/phpunit tests/
   aws-deploy:
-    needs: phpunit
     runs-on: ubuntu-latest
     services:
       localstack:
