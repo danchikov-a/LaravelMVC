@@ -1,9 +1,55 @@
-name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push]
+on:
+  push:
+    branches:
+      - main
+name: CI/CD
 jobs:
-  check-bats-version:
+  phpunit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: ./vendor/bin/sail up -d
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: Install composer dependencies
+        run: |
+          composer update
+          composer install --no-scripts
+      - name: Prepare Laravel Application
+        run: |
+          cp .env.ci .env
+          php artisan key:generate
+          php artisan migrate
+      - name: Run Testsuite
+        run: vendor/bin/phpunit tests/
+  aws-deploy:
+    needs: phpunit
+    runs-on: ubuntu-latest
+    services:
+      localstack:
+        image: localstack/localstack
+        ports:
+          - 4566:4566
+        env:
+          DOCKER_HOST: unix:///var/run/docker.sock
+        options: >-
+          --name=localstack
+          --health-cmd="curl -sS 127.0.0.1:4566 || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+    steps:
+      - uses: actions/checkout@v2
+      - name: aws_deploy_fake
+        run: |
+          curl http://localhost:4566/health
+          aws s3 mb s3://task15 --endpoint-url http://localhost:4566 --region us-west-1
+          aws s3 cp .env.example s3://task15 --endpoint-url http://localhost:4566 --region us-west-1
+          aws s3 ls s3://task15 --endpoint-url http://localhost:4566 --region us-west-1
+          aws ec2 run-instances --image-id ami-0266bbea3330d8d4d --instance-type t2.micro --endpoint-url http://localhost:4566 --region us-west-1
+          aws ec2 describe-instances --endpoint-url http://localhost:4566 --region us-west-1
+
+        env:
+          AWS_ACCESS_KEY_ID: itsafakeid
+          AWS_SECRET_ACCESS_KEY: itsafakekey
+          AWS_DEFAULT_REGION: "us-west-1"
+
