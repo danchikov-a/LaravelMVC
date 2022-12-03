@@ -12,8 +12,10 @@
         "vite": "^3.0.0"
     },
     "dependencies": {
+        "aws-sdk": "^2.1256.0",
         "boostrap": "^2.0.0",
         "bootstrap": "^5.2.2",
+        "dotenv": "^16.0.3",
         "laravel-mix": "^6.0.49"
     }
 }

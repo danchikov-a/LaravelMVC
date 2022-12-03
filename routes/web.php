@@ -29,6 +29,7 @@ Route::get('/cart', [CartController::class, 'index'])->name('cartIndex');
 Route::post('/products', [AdministrationProductController::class, 'store'])->name('productsStore');
 Route::post('/services', [AdministrationServiceController::class, 'store'])->name('servicesStore');
 Route::post('/products/{product}/addToCart', [CartController::class, 'add'])->name('addToCart');
+Route::post('/products/export', [AdministrationProductController::class, 'export'])->name('productsExport');
 
 Route::delete('/products/{product}', [AdministrationProductController::class, 'destroy'])->name('productsDestroy');
 Route::delete('/services/{service}', [AdministrationServiceController::class, 'destroy'])->name('servicesDestroy');
