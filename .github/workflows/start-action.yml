@@ -43,11 +43,11 @@ jobs:
       - name: deploy
         run: |
           curl http://localhost:4566/health
-          aws s3 mb s3://task15 --endpoint-url http://localhost:4566 --region us-west-1
-          aws s3 cp .env.example s3://task15 --endpoint-url http://localhost:4566 --region us-west-1
-          aws s3 ls s3://task15 --endpoint-url http://localhost:4566 --region us-west-1
-          aws ec2 run-instances --image-id ami-0266bbea3330d8d4d --instance-type t2.micro --endpoint-url http://localhost:4566 --region us-west-1
-          aws ec2 describe-instances --endpoint-url http://localhost:4566 --region us-west-1
+          aws s3 mb s3://bucket-for-images --endpoint-url http://localhost:4566 --region us-east-2
+          aws s3 cp .env.example s3://task15 --endpoint-url http://localhost:4566 --region us-east-2
+          aws s3 ls s3://bucket-for-images --endpoint-url http://localhost:4566 --region us-east-2
+          aws ec2 run-instances --image-id ami-05803413c51f242b7 --instance-type t2.micro --endpoint-url http://localhost:4566 --region uus-east-2
+          aws ec2 describe-instances --endpoint-url http://localhost:4566 --region us-east-2
         env:
           AWS_ACCESS_KEY_ID: localstack
           AWS_SECRET_ACCESS_KEY: localstack
