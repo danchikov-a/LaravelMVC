@@ -1,6 +1,5 @@
 name: build-app-action
 on: [push]
-env-file: .env
 jobs:
   build:
     name: CI part
