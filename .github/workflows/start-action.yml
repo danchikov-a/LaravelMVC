@@ -20,9 +20,7 @@ jobs:
           composer install --no-scripts
       - name: laravel configuration
         run: |
-          $ cd /var/www/laravel
-          $ cp .env.example .env
-          $vi .env
+          cp .env.github .env
           ./vendor/bin/sail up -d
           ./vendor/bin/sail artisan key:generate
           ./vendor/bin/sail artisan migrate
