@@ -36,14 +36,6 @@ jobs:
         image: localstack/localstack
         ports:
           - 4566:4566
-        env:
-          DOCKER_HOST: unix:///var/run/docker.sock
-        options: >-
-          --name=localstack
-          --health-cmd="curl -sS 127.0.0.1:4566 || exit 1"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
     steps:
       - uses: actions/checkout@v2
       - name: deploy
