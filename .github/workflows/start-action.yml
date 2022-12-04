@@ -12,11 +12,11 @@ jobs:
         with:
           fetch-depth: 1
       - name: composer configuration
-        run: |
+      - run: |
           composer update
           composer install --no-scripts
       - name: laravel configuration
-        run: |
+      - run: |
           cp .env.ci .env
           ./vendor/bin/sail artisan key:generate
           ./vendor/bin/sail artisan migrate
