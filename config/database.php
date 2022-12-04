@@ -95,6 +95,7 @@ return [
 
         'testing' => [
             'driver'    => 'sqlite',
+            'host' => env('127.0.0.1'),
             'database'  => ':memory:',
             'prefix'    => ''
         ]
