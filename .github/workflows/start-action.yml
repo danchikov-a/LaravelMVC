@@ -6,6 +6,13 @@ jobs:
     name: CI part
     runs-on: ubuntu-latest
     steps:
+      - name: Import environment variables from a file
+        id: import-env
+        shell: bash
+        run: |
+            while read line; do
+              echo "$line" >> $GITHUB_ENV
+            done < ${{ env.ENV_FILE }}
       - uses: actions/checkout@v1
         with:
           fetch-depth: 1
