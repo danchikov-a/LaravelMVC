@@ -93,12 +93,6 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
-        'testing' => [
-            'driver' => 'sqlite',
-            'host' => env('127.0.0.1'),
-            'database' => ':memory:',
-            'prefix' => ''
-        ]
     ],
 
     /*
