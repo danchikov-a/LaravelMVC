@@ -1,8 +1,5 @@
 name: build-app-action
-on:
-  push:
-    branches:
-      - master
+on: [push]
 jobs:
   build:
     name: CI part
