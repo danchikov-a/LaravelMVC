@@ -12,45 +12,43 @@ jobs:
         with:
           fetch-depth: 1
       - name: composer configuration
-      - run: |
+        run: |
           composer update
           composer install --no-scripts
       - name: laravel configuration
-      - run: |
+        run: |
           cp .env.ci .env
           ./vendor/bin/sail artisan key:generate
           ./vendor/bin/sail artisan migrate
           ./vendor/bin/sail artisan db:seed --class=ProductSeeder
-      - name: running tests
-      # run: vendor/bin/phpunit tests/
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     services:
-        localstack:
-          image: localstack/localstack
-          ports:
-            - 4566:4566
-          env:
-            DOCKER_HOST: unix:///var/run/docker.sock
-          options: >-
-            --name=localstack
-            --health-cmd="curl -sS 127.0.0.1:4566 || exit 1"
-            --health-interval=10s
-            --health-timeout=5s
-            --health-retries=3
+      localstack:
+        image: localstack/localstack
+        ports:
+          - 4566:4566
+        env:
+          DOCKER_HOST: unix:///var/run/docker.sock
+        options: >-
+          --name=localstack
+          --health-cmd="curl -sS 127.0.0.1:4566 || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     steps:
-        - uses: actions/checkout@v2
-        - name: aws_deploy_fake
-          run: |
-            curl http://localhost:4566/health
-            aws s3 mb s3://task15 --endpoint-url http://localhost:4566 --region us-west-1
-            aws s3 cp .env.example s3://task15 --endpoint-url http://localhost:4566 --region us-west-1
-            aws s3 ls s3://task15 --endpoint-url http://localhost:4566 --region us-west-1
-            aws ec2 run-instances --image-id ami-0266bbea3330d8d4d --instance-type t2.micro --endpoint-url http://localhost:4566 --region us-west-1
-            aws ec2 describe-instances --endpoint-url http://localhost:4566 --region us-west-1
-          env:
-            AWS_ACCESS_KEY_ID: itsafakeid
-            AWS_SECRET_ACCESS_KEY: itsafakekey
-            AWS_DEFAULT_REGION: "us-west-1"
+      - uses: actions/checkout@v2
+      - name: aws_deploy_fake
+        run: |
+          curl http://localhost:4566/health
+          aws s3 mb s3://task15 --endpoint-url http://localhost:4566 --region us-west-1
+          aws s3 cp .env.example s3://task15 --endpoint-url http://localhost:4566 --region us-west-1
+          aws s3 ls s3://task15 --endpoint-url http://localhost:4566 --region us-west-1
+          aws ec2 run-instances --image-id ami-0266bbea3330d8d4d --instance-type t2.micro --endpoint-url http://localhost:4566 --region us-west-1
+          aws ec2 describe-instances --endpoint-url http://localhost:4566 --region us-west-1
+        env:
+          AWS_ACCESS_KEY_ID: itsafakeid
+          AWS_SECRET_ACCESS_KEY: itsafakekey
+          AWS_DEFAULT_REGION: "us-west-1"
