@@ -36,4 +36,13 @@ class ProductService
     {
         return Storage::put("/catalog.csv", FileManager::saveCsv($catalog));
     }
+
+    public static function getProductsWithUsdCosts(Collection $products, float $usdPrice): Collection
+    {
+        foreach ($products as $product) {
+            $product->usdCost = $product->cost / $usdPrice;
+        }
+
+        return $products;
+    }
 }
