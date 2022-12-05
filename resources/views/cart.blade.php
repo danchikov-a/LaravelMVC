@@ -1,4 +1,4 @@
-@extends('layout.baseLayout')
+@extends('layouts.app')
 @section('content')
     <table class="table table-bordered table-hover">
         <thead class="thead-dark">
