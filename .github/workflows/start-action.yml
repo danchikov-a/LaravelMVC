@@ -1,0 +1,46 @@
+name: build-app-action
+on: [push]
+env:
+  AWS_ACCESS_KEY_ID: localstack
+  AWS_SECRET_ACCESS_KEY: localstack
+  AWS_DEFAULT_REGION: "us-east-2"
+  LOCAL_ENDPOINT: "http://localhost:4566"
+  IMAGE_ID: "ami-05803413c51f242b7"
+jobs:
+  build:
+    name: CI part
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: composer configuration
+        run: |
+          composer update
+          composer install --no-scripts
+      - name: laravel configuration
+        run: |
+          cp .env.github .env
+          ./vendor/bin/sail up -d
+          ./vendor/bin/sail artisan key:generate
+          ./vendor/bin/sail artisan migrate
+  deploy:
+    needs: build
+    name: CD part
+    runs-on: ubuntu-latest
+    services:
+      localstack:
+        image: localstack/localstack
+        ports:
+          - 4566:4566
+    steps:
+      - uses: actions/checkout@v2
+      - name: deployment
+        run: |
+          curl http://localhost:4566/health
+          aws s3 mb s3://bucket-for-images --endpoint-url $LOCAL_ENDPOINT --region $AWS_DEFAULT_REGION
+          aws s3 cp .env.example s3://bucket-for-images --endpoint-url $LOCAL_ENDPOINT --region $AWS_DEFAULT_REGION
+          aws s3 ls s3://bucket-for-images --endpoint-url $LOCAL_ENDPOINT --region $AWS_DEFAULT_REGION
+          aws ec2 run-instances --image-id $IMAGE_ID --instance-type t2.micro --endpoint-url $LOCAL_ENDPOINT --region $AWS_DEFAULT_REGION
+          aws ec2 describe-instances --endpoint-url $LOCAL_ENDPOINT --region $AWS_DEFAULT_REGION
+
