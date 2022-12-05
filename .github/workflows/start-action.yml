@@ -24,10 +24,8 @@ jobs:
           ./vendor/bin/sail up -d
           ./vendor/bin/sail artisan key:generate
           ./vendor/bin/sail artisan migrate
-      - name: running tests
-        run: vendor/bin/phpunit tests/
   deploy:
-    #needs: build
+    needs: build
     name: CD part
     runs-on: ubuntu-latest
     services:
